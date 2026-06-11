@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Guessing Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .game-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+        input[type=number] {
+            padding: 10px;
+            width: 60px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #message {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="game-container">
+    <h2>Number Guessing Game</h2>
+    <form id="guessForm">
+        <input type="number" id="guessInput" min="1" max="100" placeholder="1-100" required>
+        <button type="submit">Guess</button>
+    </form>
+    <p id="message"></p>
+</div>
+
+<script>
+const minNum = 1;
+const maxNum = 100;
+const answer = Math.floor(Math.random() * (maxNum - minNum + 1)) + minNum;
+let attempts = 0;
+
+const form = document.getElementById("guessForm");
+const input = document.getElementById("guessInput");
+const message = document.getElementById("message");
+
+form.addEventListener("submit", function(e) {
+    e.preventDefault(); // Prevent form from refreshing the page
+    const guess = Number(input.value);
+    
+    if (isNaN(guess)) {
+        message.textContent = "Please enter a valid number.";
+        message.style.color = "red";
+    } else if (guess < minNum || guess > maxNum) {
+        message.textContent = `Please enter a number between ${minNum} and ${maxNum}.`;
+        message.style.color = "red";
+    } else {
+        attempts++;
+        if (guess < answer) {
+            message.textContent = "Too Low! Try again.";
+            message.style.color = "orange";
+        } else if (guess > answer) {
+            message.textContent = "Too High! Try again.";
+            message.style.color = "orange";
+        } else {
+            message.textContent = `🎉 Congratulations! You guessed the number ${answer} in ${attempts} attempts.`;
+            message.style.color = "green";
+            input.disabled = true; // Disable input after correct guess
+            form.querySelector("button").disabled = true;
+        }
+    }
+    input.value = "";
+    input.focus();
+});
+</script>
+
+</body>
+</html>
