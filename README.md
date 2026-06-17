@@ -14,7 +14,7 @@ A collection of frontend projects built using HTML, CSS, and JavaScript.
 ## Technologies Used
 - HTML
 - CSS
-- JavaScript
+
 
 ## Author
 Chalam Swarna
